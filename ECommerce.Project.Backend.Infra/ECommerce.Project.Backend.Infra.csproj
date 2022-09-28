@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ECommerce.Project.Backend.Domain\ECommerce.Project.Backend.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\" />
+  </ItemGroup>
+
 </Project>
