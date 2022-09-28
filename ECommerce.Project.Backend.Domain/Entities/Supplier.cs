@@ -9,7 +9,7 @@ namespace ECommerce.Project.Backend.Domain.Entities
         public string PhoneNumber { get; protected set; }
         public string Email { get; protected set; }
         public string EinNumber { get; protected set; }
-        public Adress Adress { get; protected set; }
+        public Address Adress { get; protected set; }
         
 
         protected Supplier()

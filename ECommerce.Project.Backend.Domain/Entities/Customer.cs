@@ -7,7 +7,7 @@ namespace ECommerce.Project.Backend.Domain.Entities
         public string Name { get; protected set; }
         public string Email { get; protected set; }
         public string PhoneNumber { get; protected set; }
-        public Adress Address { get; protected set; }
+        public Address Address { get; protected set; }
 
         protected Customer()
         {

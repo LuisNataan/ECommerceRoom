@@ -2,7 +2,7 @@
 
 namespace ECommerce.Project.Backend.Domain.ComplexTypes
 {
-    public class Adress : BaseEntity
+    public class Address : BaseEntity
     {
         public string City { get; protected set; }
         public string State { get; protected set; }
@@ -10,7 +10,7 @@ namespace ECommerce.Project.Backend.Domain.ComplexTypes
         public string Number { get; protected set; }
         public string ZipCode { get; protected set; }
 
-        protected Adress()
+        protected Address()
         {
         }
     }
