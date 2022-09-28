@@ -31,7 +31,9 @@ namespace ECommerce.Project.Backend.Domain.Validations
                 .EmailAddress().WithMessage("Invalid email address. Ex: example@examroom.ai");
 
             RuleFor(s => s.EinNumber)
-                .NotEmpty().WithMessage("EIN Number cannot be empty.");
+                .NotEmpty().WithMessage("EIN Number cannot be empty.")
+                .Length(9, 9).WithMessage("EIN number is 9 characters long.")
+                .Matches(_numberRule).WithMessage("EIN number has invalid characters.");
         }
     }
 }
