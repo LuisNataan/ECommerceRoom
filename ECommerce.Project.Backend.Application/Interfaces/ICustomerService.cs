@@ -8,7 +8,7 @@ namespace ECommerce.Project.Backend.Application.Interfaces
         Task Update(Customer customer);
         Task Delete(Customer customer);
         Task<Customer> GetById(int id);
-        Task<IEnumerable<Customer>> GetAll();
+        Task<List<Customer>> GetAll();
         Task<Customer> Authenticate(string email);
     }
 }
