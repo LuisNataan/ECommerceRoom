@@ -37,7 +37,7 @@ namespace ECommerce.Project.Backend.Application.Services
             await _customerRepository.SaveChanges();
         }
 
-        public async Task<IEnumerable<Customer>> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
             return await _customerRepository.GetAll();
         }

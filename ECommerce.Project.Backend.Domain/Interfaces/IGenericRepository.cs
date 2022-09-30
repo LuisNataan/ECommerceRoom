@@ -8,7 +8,7 @@ namespace ECommerce.Project.Backend.Domain.Interfaces
         Task<TEntity> GetById(int id);
         Task Update(TEntity entity);
         Task Delete(TEntity entity);
-        Task<IEnumerable<TEntity>> GetAll();
+        Task<List<TEntity>> GetAll();
         Task SaveChanges();
     }
 }
