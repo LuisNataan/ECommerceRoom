@@ -12,5 +12,13 @@ namespace ECommerce.Project.Backend.Domain.Entities
         protected Customer()
         {
         }
+
+        public Customer(string name, string email, string phoneNumber, Address address)
+        {
+            this.Name = name;
+            this.Email = email;
+            this.PhoneNumber = phoneNumber;
+            this.Address = address;
+        }
     }
 }

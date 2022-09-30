@@ -1,5 +1,4 @@
 ﻿using ECommerce.Project.Backend.Domain.ComplexTypes;
-using ECommerce.Project.Backend.Domain.Utils;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
