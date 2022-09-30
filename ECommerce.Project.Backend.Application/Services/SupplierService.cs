@@ -21,14 +21,22 @@ namespace ECommerce.Project.Backend.Application.Services
             result.ThrowExceptionIfFails();
 
             await _supplierRepository.Create(supplier);
+            await _supplierRepository.SaveChanges();
+        }
+
+        public async Task Update(Supplier supplier)
+        {
+            await _supplierRepository.Update(supplier);
+            await _supplierRepository.SaveChanges();
         }
 
         public async Task Delete(Supplier supplier)
         {
             await _supplierRepository.Delete(supplier);
+            await _supplierRepository.SaveChanges();
         }
 
-        public async Task<IEnumerable<Supplier>> GetAll(Supplier supplier)
+        public async Task<IEnumerable<Supplier>> GetAll()
         {
             return await _supplierRepository.GetAll();
         }
@@ -51,14 +59,16 @@ namespace ECommerce.Project.Backend.Application.Services
             
         }
 
-        public Task<bool> SupplierAlreadyExists(string einNumber)
+        public async Task<bool> SupplierAlreadyExists(string einNumber)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(Supplier supplier)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                return await _supplierRepository.SupplierAlreadyExists(einNumber);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
         }
     }
 }
