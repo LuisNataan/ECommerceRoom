@@ -26,7 +26,7 @@ namespace ECommerce.Project.Backend.Infra.Repositories
             _dbSet.Update(entity);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<List<TEntity>> GetAll()
         {
             return await Query().Where(x => !x.Deleted).ToListAsync();
         }

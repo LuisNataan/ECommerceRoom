@@ -7,13 +7,11 @@ namespace ECommerce.Project.Backend.Web.Controller
 {
     public class HomeController : ControllerBase
     {
-        private readonly ILogger<HomeController> _logger;
         private ISupplierService _supplierService;
         private ICustomerService _customerService;
 
-        public HomeController(ILogger<HomeController> logger, ISupplierService supplierService, ICustomerService customerService)
+        public HomeController(ISupplierService supplierService, ICustomerService customerService)
         {
-            _logger = logger;
             _supplierService = supplierService;
             _customerService = customerService;
         }
@@ -30,7 +28,7 @@ namespace ECommerce.Project.Backend.Web.Controller
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
     }

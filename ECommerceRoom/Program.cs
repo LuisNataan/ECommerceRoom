@@ -8,15 +8,18 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
-builder.Services.AddDbContextPool<MainContext>(options => options.UseSqlServer("ConnectionStrings"));
-
 builder.Services.AddTransient<ISupplierService, SupplierService>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
+builder.Services.AddDbContext<MainContext>(options => options.UseSqlServer(connectionString));
+Environment.SetEnvironmentVariable("ConnectionString", connectionString);
 
 var app = builder.Build();
 
