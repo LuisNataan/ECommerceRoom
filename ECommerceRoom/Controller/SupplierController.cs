@@ -21,7 +21,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
 
         public IActionResult Index()
         {
-            return Content("Welcome to the ECommerce!");
+            return Content("Welcome to the ECommerce Room!");
         }
 
         [HttpPost("Create")]
@@ -37,7 +37,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 Supplier supplier = mapper.Map<Supplier>(supplierViewModel);
                 await _supplier.Create(supplier);
 
-                return Ok();
+                return Ok(supplier);
             }
             catch (Exceptions ex)
             {
@@ -47,8 +47,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPatch("{id}/" +
-            "Update")]
+        [HttpPut("{id}/Update")]
         public async Task<IActionResult> Update(SupplierInsertViewModel supplierInsertView)
         {
             try
@@ -61,7 +60,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 Supplier supplier = mapper.Map<Supplier>(supplierInsertView);
                 await _supplier.Create(supplier);
 
-                return Ok();
+                return Ok(supplier);
             }
             catch (Exception ex)
             {
@@ -86,9 +85,29 @@ namespace ECommerce.Project.Backend.Domain.Controller
             }
         }
 
+        public async Task<IActionResult> GetCustomerById(int id) 
+        {
+            try
+            {
+                var customer = await _supplier.GetById(id);
+                if (customer != null)
+                {
+                    return Ok(customer);
+                }
+                else 
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
 
 
-        [HttpDelete("Delete")]
+        [HttpDelete("{id}/Delete")]
         public async Task<IActionResult> Delete(SupplierInsertViewModel supplierInsertView)
         {
             try
