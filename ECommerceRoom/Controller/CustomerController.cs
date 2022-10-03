@@ -7,33 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Project.Backend.Web.Controller
 {
-    [Route("Cusotmer")]
+    [Route("Customer")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customer;
+        private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerService customer)
+        public CustomerController(ICustomerService customer, IMapper mapper)
         {
             _customer = customer;
+            _mapper = mapper;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return Content("Welcome to to The ECommerce Room!");
-        //}
 
         [HttpPost("Create")]
         public async Task<IActionResult> Create(CustomerInsertViewModel customerInsertView)
         {
             try
             {
-                var config = new MapperConfiguration(c =>
-                {
-                    c.CreateMap<CustomerInsertViewModel, Customer>();
-                });
-                IMapper mapper = config.CreateMapper();
-                Customer customer = mapper.Map<Customer>(customerInsertView);
-                await _customer.Create(customer);
+                await _customer.Create(_mapper.Map<Customer>(customerInsertView));
 
                 return Ok();
             }

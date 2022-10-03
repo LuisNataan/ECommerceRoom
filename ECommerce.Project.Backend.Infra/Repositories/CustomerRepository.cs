@@ -19,6 +19,7 @@ namespace ECommerce.Project.Backend.Infra.Repositories
         public override async Task<Customer> GetById(int id)
         {
             return await _dbSet.Include(c => c.Address).FirstOrDefaultAsync(c => c.Id == id && !c.Deleted);
+
         }
     }
 }

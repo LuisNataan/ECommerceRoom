@@ -25,7 +25,7 @@ namespace ECommerce.Project.Backend.Infra.Mappings
 
             builder.Property(s => s.PhoneNumber)
                 .IsFixedLength()
-                .HasMaxLength(11)
+                .HasMaxLength(12)
                 .IsRequired();
 
             builder.Property(s => s.Email)

@@ -5,7 +5,7 @@ namespace ECommerce.Project.Backend.Domain.Validations
 {
     public class CustomerValidator : AbstractValidator<Customer>
     {
-        private readonly string _stringRule = "^[0-9a-zA-Z\\s]+$";  //áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ^[a-zA-Z\s]*$
+        private readonly string _stringRule = "^[0-9a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\\s]+$";
         private readonly string _numberRule = "^[0-9]+$";
 
         public CustomerValidator()

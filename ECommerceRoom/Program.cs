@@ -1,3 +1,4 @@
+using AutoMapper;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Application.Services;
 using ECommerce.Project.Backend.Domain.Interfaces;
@@ -13,13 +14,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var config = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new ECommerce.Project.Backend.Web.Utils.MapperConfiguration());
+});
+
+IMapper mapper = config.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
 // Add services to the container.
-builder.Services.AddTransient<ISupplierService, SupplierService>();
-builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 
-builder.Services.AddTransient<ICustomerService, CustomerService>();
-builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
-
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 
 builder.Services.AddRouting();

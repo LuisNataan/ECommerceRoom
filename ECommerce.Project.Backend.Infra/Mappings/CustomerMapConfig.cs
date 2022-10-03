@@ -10,7 +10,7 @@ namespace ECommerce.Project.Backend.Infra.Mappings
         {
             builder.ToTable("Customers");
 
-            
+
             builder.Property(c => c.Name)
                 .HasMaxLength(60)
                 .IsRequired();

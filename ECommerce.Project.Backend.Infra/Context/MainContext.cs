@@ -27,14 +27,14 @@ namespace ECommerce.Project.Backend.Infra.Context
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MainContext).Assembly);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                    .UseLazyLoadingProxies()
-                    .UseSqlServer("Default Connection");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder
+        //            .UseLazyLoadingProxies()
+        //            .UseSqlServer("Default Connection");
+        //    }
+        //}
     }
 }

@@ -1,16 +1,16 @@
 ﻿using ECommerce.Project.Backend.Application.Commom;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
+using ECommerce.Project.Backend.Domain.Interfaces;
 using ECommerce.Project.Backend.Domain.Validations;
-using ECommerce.Project.Backend.Infra.Repositories;
 
 namespace ECommerce.Project.Backend.Application.Services
 {
     public class SupplierService : ISupplierService
     {
-        private readonly SupplierRepository _supplierRepository;
+        private readonly ISupplierRepository _supplierRepository;
 
-        public SupplierService(SupplierRepository supplier)
+        public SupplierService(ISupplierRepository supplier)
         {
             this._supplierRepository = supplier;
         }

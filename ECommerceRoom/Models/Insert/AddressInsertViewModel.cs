@@ -1,8 +1,6 @@
-﻿using ECommerce.Project.Backend.Domain.Entities;
-
-namespace ECommerce.Project.Backend.Domain.ComplexTypes
+﻿namespace ECommerce.Project.Backend.Web.Models.Insert
 {
-    public class Address : BaseEntity
+    public class AddressInsertViewModel
     {
         public string City { get; set; }
         public string State { get; set; }
