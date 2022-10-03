@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ECommerce.Project.Backend.Application.Commom;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
 using ECommerce.Project.Backend.Web.Models.Insert;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Project.Backend.Web.Controller
 {
     [Route("Cusotmer")]
-    [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customer;
@@ -17,10 +17,10 @@ namespace ECommerce.Project.Backend.Web.Controller
             _customer = customer;
         }
 
-        public IActionResult Index()
-        {
-            return Content("Welcome to to The ECommerce Room!");
-        }
+        //public IActionResult Index()
+        //{
+        //    return Content("Welcome to to The ECommerce Room!");
+        //}
 
         [HttpPost("Create")]
         public async Task<IActionResult> Create(CustomerInsertViewModel customerInsertView)
@@ -37,7 +37,7 @@ namespace ECommerce.Project.Backend.Web.Controller
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exceptions ex)
             {
 
                 return BadRequest(ex.Message);
@@ -90,7 +90,7 @@ namespace ECommerce.Project.Backend.Web.Controller
         }
 
         [HttpGet("Customers")]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
             try
             {

@@ -19,10 +19,10 @@ namespace ECommerce.Project.Backend.Domain.Controller
         }
 
 
-        public IActionResult Index()
-        {
-            return Content("Welcome to the ECommerce Room!");
-        }
+        //public IActionResult Index()
+        //{
+        //    return Content("Welcome to the ECommerce Room!");
+        //}
 
         [HttpPost("Create")]
         public async Task<IActionResult> Create(SupplierInsertViewModel supplierViewModel)
@@ -64,12 +64,12 @@ namespace ECommerce.Project.Backend.Domain.Controller
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet()]
+        [HttpGet("GetSuppliers")]
         public async Task<IActionResult> GetAll()
         {
 
@@ -85,6 +85,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
             }
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerById(int id) 
         {
             try

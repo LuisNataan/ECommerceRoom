@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerce.Project.Backend.Domain\ECommerce.Project.Backend.Domain.csproj" />
+    <ProjectReference Include="..\ECommerce.Project.Backend.Infra\ECommerce.Project.Backend.Infra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,23 +1,23 @@
 ﻿using ECommerce.Project.Backend.Application.Commom;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
-using ECommerce.Project.Backend.Domain.Interfaces;
 using ECommerce.Project.Backend.Domain.Validations;
+using ECommerce.Project.Backend.Infra.Repositories;
 
 namespace ECommerce.Project.Backend.Application.Services
 {
     public class SupplierService : ISupplierService
     {
-        private readonly ISupplierRepository _supplierRepository;
-        
-        public SupplierService(ISupplierRepository supplier)
+        private readonly SupplierRepository _supplierRepository;
+
+        public SupplierService(SupplierRepository supplier)
         {
             this._supplierRepository = supplier;
         }
 
         public async Task Create(Supplier supplier)
         {
-            var result = new SupplierValidation().Validate(supplier);
+            var result = new SupplierValidator().Validate(supplier);
             result.ThrowExceptionIfFails();
 
             await _supplierRepository.Create(supplier);
@@ -56,7 +56,7 @@ namespace ECommerce.Project.Backend.Application.Services
             {
                 throw ex.InnerException;
             }
-            
+
         }
 
         public async Task<bool> SupplierAlreadyExists(string einNumber)

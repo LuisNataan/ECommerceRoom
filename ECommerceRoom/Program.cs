@@ -7,6 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 // Add services to the container.
 builder.Services.AddTransient<ISupplierService, SupplierService>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
@@ -14,12 +20,13 @@ builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 
-builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
+
+builder.Services.AddRouting();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MainContext>(options => options.UseSqlServer(connectionString));
-Environment.SetEnvironmentVariable("ConnectionString", connectionString);
+Environment.SetEnvironmentVariable("connectionString", connectionString);
 
 var app = builder.Build();
 
@@ -41,6 +48,10 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
+app.UseHttpsRedirection();
+
 app.MapRazorPages();
+
+app.MapControllers();
 
 app.Run();

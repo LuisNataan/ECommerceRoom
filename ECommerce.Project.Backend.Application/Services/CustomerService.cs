@@ -1,16 +1,16 @@
 ﻿using ECommerce.Project.Backend.Application.Commom;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
-using ECommerce.Project.Backend.Domain.Interfaces;
 using ECommerce.Project.Backend.Domain.Validations;
+using ECommerce.Project.Backend.Infra.Repositories;
 
 namespace ECommerce.Project.Backend.Application.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly CustomerRepository _customerRepository;
 
-        public CustomerService(ICustomerRepository customer)
+        public CustomerService(CustomerRepository customer)
         {
             this._customerRepository = customer;
         }
@@ -49,7 +49,7 @@ namespace ECommerce.Project.Backend.Application.Services
 
         public async Task<Customer> Authenticate(string email)
         {
-           return await _customerRepository.Authenticate(email);
+            return await _customerRepository.Authenticate(email);
         }
     }
 }

@@ -4,11 +4,11 @@ namespace ECommerce.Project.Backend.Application.Commom
 {
     public static class Validation
     {
-        public static void ThrowExceptionIfFails(this ValidationResult result)
+        public static ValidationResult ThrowExceptionIfFails(this ValidationResult result)
         {
             if (result.IsValid)
             {
-                return;
+                return result;
             }
             else
             {
