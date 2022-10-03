@@ -6,9 +6,9 @@ namespace ECommerce.Project.Backend.Domain.Validations
 {
     public class AddressValidator : AbstractValidator<Address>
     {
-        private readonly string _stringRule = "^[0 - 9 a - zA - ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ] +$";
-        private readonly string _stateAbbreviationRule = "^[A - Z]+$";
-        private readonly string _numberRule = "^[0 - 9] + $";
+        private readonly string _stringRule = "^[0-9a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\\s]+$";
+        private readonly string _stateAbbreviationRule = "^[A-Z]+$";
+        private readonly string _numberRule = "^[0-9]+$";
         private readonly string _usZipCode = @"^\d{5}(?:[-\s]\d{4})?$";
 
         public AddressValidator()

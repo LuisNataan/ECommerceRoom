@@ -5,8 +5,8 @@ namespace ECommerce.Project.Backend.Domain.Validations
 {
     public class CustomerValidator : AbstractValidator<Customer>
     {
-        private readonly string _stringRule = "^[0 - 9 a - zA - ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ] +$";
-        private readonly string _numberRule = "^[0 - 9] + $";
+        private readonly string _stringRule = "^[0-9a-zA-Z\\s]+$";  //áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ^[a-zA-Z\s]*$
+        private readonly string _numberRule = "^[0-9]+$";
 
         public CustomerValidator()
         {
@@ -22,7 +22,7 @@ namespace ECommerce.Project.Backend.Domain.Validations
 
             RuleFor(c => c.PhoneNumber)
                 .NotEmpty().WithMessage("Phone number cannot be empty.")
-                .Length(11, 11).WithMessage("Phone number must be 12 characters long.")
+                .Length(12, 12).WithMessage("Phone number must be 12 characters long.")
                 .Matches(_numberRule).WithMessage("Phone number has invalid characters.");
         }
     }

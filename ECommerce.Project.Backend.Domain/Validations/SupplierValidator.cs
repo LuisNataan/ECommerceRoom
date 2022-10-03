@@ -3,12 +3,12 @@ using FluentValidation;
 
 namespace ECommerce.Project.Backend.Domain.Validations
 {
-    public class SupplierValidation : AbstractValidator<Supplier>
+    public class SupplierValidator : AbstractValidator<Supplier>
     {
-        private readonly string _supplierName = "^[0 - 9 a - zA - ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ] +$";
-        private readonly string _numberRule = "^[0 - 9] + $";
+        private readonly string _supplierName = "^[0-9a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\\s] +$";
+        private readonly string _numberRule = "^[0-9]+$";
 
-        public SupplierValidation()
+        public SupplierValidator()
         {
             RuleFor(s => s.Name)
                 .NotEmpty().WithMessage("Name cannot be empty.")
