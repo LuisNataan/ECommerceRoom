@@ -13,7 +13,7 @@ namespace ECommerce.Project.Backend.Infra.Repositories
 
         public override async Task<Supplier> GetById(int id) 
         {
-            return await _dbSet.Include(s => s.Adress).FirstOrDefaultAsync(s => s.Id == id && !s.Deleted);
+            return await _dbSet.Include(s => s.Address).FirstOrDefaultAsync(s => s.Id == id && !s.Deleted);
         }
 
         public async Task<Supplier> GetSupplier(string einNumber)

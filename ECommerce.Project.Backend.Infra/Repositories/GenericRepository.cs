@@ -23,7 +23,7 @@ namespace ECommerce.Project.Backend.Infra.Repositories
 
         public async Task Delete(TEntity entity)
         {
-            _dbSet.Update(entity);
+            _dbSet.Remove(entity);
         }
 
         public async Task<List<TEntity>> GetAll()
@@ -41,9 +41,9 @@ namespace ECommerce.Project.Backend.Infra.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Update(entity);
         }
 
         public IQueryable<TEntity> Query() => _dbSet.AsNoTracking();
