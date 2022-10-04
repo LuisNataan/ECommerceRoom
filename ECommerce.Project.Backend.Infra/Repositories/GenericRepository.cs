@@ -26,14 +26,9 @@ namespace ECommerce.Project.Backend.Infra.Repositories
             _dbSet.Remove(entity);
         }
 
-        public async Task<List<TEntity>> GetAll()
-        {
-            return await Query().Where(x => !x.Deleted).ToListAsync();
-        }
-
         public virtual async Task<TEntity> GetById(int id)
         {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id && !x.Deleted);
+            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id && !x.Deleted);
         }
 
         public async Task SaveChanges()
@@ -44,6 +39,7 @@ namespace ECommerce.Project.Backend.Infra.Repositories
         public async Task Update(TEntity entity)
         {
             _dbSet.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public IQueryable<TEntity> Query() => _dbSet.AsNoTracking();
