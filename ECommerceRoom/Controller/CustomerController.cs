@@ -30,7 +30,6 @@ namespace ECommerce.Project.Backend.Web.Controller
             }
             catch (Exceptions ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }
@@ -40,16 +39,9 @@ namespace ECommerce.Project.Backend.Web.Controller
         {
             try
             {
-                var config = new MapperConfiguration(c =>
-                {
-                    c.CreateMap<CustomerInsertViewModel, Customer>();
-                });
-                IMapper mapper = config.CreateMapper();
-                Customer customer = mapper.Map<Customer>(customerInsertView);
+                await _customer.Update(_mapper.Map<Customer>(customerInsertView));
 
-                await _customer.Update(customer);
-
-                return Ok(customer);
+                return Ok(customerInsertView);
             }
             catch (Exception ex)
             {
@@ -91,6 +83,21 @@ namespace ECommerce.Project.Backend.Web.Controller
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}/Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _customer.Delete(id);
+                return NoContent();
+            }
+            catch (Exceptions ex)
+            {
+
+                return BadRequest(ex);
             }
         }
     }
