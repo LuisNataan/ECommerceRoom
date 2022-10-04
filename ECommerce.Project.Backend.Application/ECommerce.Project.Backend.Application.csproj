@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerce.Project.Backend.Domain\ECommerce.Project.Backend.Domain.csproj" />
+    <ProjectReference Include="..\ECommerce.Project.Backend.Infra\ECommerce.Project.Backend.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
