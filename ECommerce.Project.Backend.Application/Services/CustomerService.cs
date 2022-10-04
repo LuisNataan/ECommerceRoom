@@ -48,6 +48,11 @@ namespace ECommerce.Project.Backend.Application.Services
 
         public Task<Customer> GetById(int id)
         {
+            var customer = new Customer() 
+            {
+                Id = id
+            };
+
             return _customerRepository.GetById(id);
         }
 
