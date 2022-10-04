@@ -1,7 +1,6 @@
 ﻿using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ECommerce.Project.Backend.Web.Controller
 {

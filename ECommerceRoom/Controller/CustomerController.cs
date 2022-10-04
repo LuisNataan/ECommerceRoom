@@ -34,8 +34,8 @@ namespace ECommerce.Project.Backend.Web.Controller
             }
         }
 
-        [HttpPut("{id}/Update")]
-        public async Task<IActionResult> Update(CustomerInsertViewModel customerInsertView)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] CustomerInsertViewModel customerInsertView)
         {
             try
             {
@@ -73,16 +73,15 @@ namespace ECommerce.Project.Backend.Web.Controller
         }
 
         [HttpGet("Customers")]
-        public async Task<IActionResult> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
             try
             {
-                await _customer.GetAll();
-                return Ok();
+                return await _customer.GetAll();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return null;
             }
         }
 

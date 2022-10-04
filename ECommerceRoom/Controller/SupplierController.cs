@@ -8,85 +8,62 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Project.Backend.Domain.Controller
 {
     [Route("Supplier")]
-    [ApiController]
     public class SupplierController : ControllerBase
     {
         private readonly ISupplierService _supplier;
+        private readonly IMapper _mapper;
 
-        public SupplierController(ISupplierService supplier)
+        public SupplierController(ISupplierService supplier, IMapper mapper)
         {
             _supplier = supplier;
+            _mapper = mapper;
         }
-
-
-        //public IActionResult Index()
-        //{
-        //    return Content("Welcome to the ECommerce Room!");
-        //}
 
         [HttpPost("Create")]
         public async Task<IActionResult> Create(SupplierInsertViewModel supplierViewModel)
         {
             try
             {
-                var config = new MapperConfiguration(s =>
-                {
-                    s.CreateMap<SupplierInsertViewModel, Supplier>();
-                });
-                IMapper mapper = config.CreateMapper();
-                Supplier supplier = mapper.Map<Supplier>(supplierViewModel);
-                await _supplier.Create(supplier);
+                await _supplier.Create(_mapper.Map<Supplier>(supplierViewModel));
 
-                return Ok(supplier);
+                return Ok();
             }
             catch (Exceptions ex)
             {
                 return UnprocessableEntity(ex.Message);
             }
-
-            return RedirectToAction("Index", "Home");
         }
 
-        [HttpPut("{id}/Update")]
-        public async Task<IActionResult> Update(SupplierInsertViewModel supplierInsertView)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] SupplierInsertViewModel supplierViewModel)
         {
             try
             {
-                var config = new MapperConfiguration(s => 
-                {
-                    s.CreateMap<SupplierInsertViewModel, Supplier>();
-                });
-                IMapper mapper = config.CreateMapper();
-                Supplier supplier = mapper.Map<Supplier>(supplierInsertView);
-                await _supplier.Create(supplier);
+                await _supplier.Update(_mapper.Map<Supplier>(supplierViewModel));
 
-                return Ok(supplier);
+                return Ok(supplierViewModel);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("GetSuppliers")]
-        public async Task<IActionResult> GetAll()
+        public async Task<List<Supplier>> GetAll()
         {
-
             try
             {
-                await _supplier.GetAll();
-                return Ok();
+                return await _supplier.GetAll();
             }
-            catch (Exception ex)
+            catch
             {
-
-                return BadRequest(ex.Message);
+                return null;
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomerById(int id) 
+        public async Task<IActionResult> GetCustomerById(int id)
         {
             try
             {
@@ -95,7 +72,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 {
                     return Ok(customer);
                 }
-                else 
+                else
                 {
                     return NoContent();
                 }
@@ -109,18 +86,11 @@ namespace ECommerce.Project.Backend.Domain.Controller
 
 
         [HttpDelete("{id}/Delete")]
-        public async Task<IActionResult> Delete(SupplierInsertViewModel supplierInsertView)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var config = new MapperConfiguration(s => 
-                {
-                    s.CreateMap<SupplierInsertViewModel, Supplier>();
-                });
-                IMapper mapper = config.CreateMapper();
-                Supplier supplier = mapper.Map<Supplier>(supplierInsertView);
-
-                await _supplier.Delete(supplier);
+                await _supplier.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)
