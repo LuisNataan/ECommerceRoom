@@ -7,5 +7,6 @@ namespace ECommerce.Project.Backend.Domain.Interfaces
         Task<bool> SupplierAlreadyExists(string einNumber);
         Task<bool> SameEinNumberSupplier(string einNumber, int id);
         Task<Supplier> GetSupplier(string einNumber);
+        Task<List<Supplier>> GetAll();
     }
 }
