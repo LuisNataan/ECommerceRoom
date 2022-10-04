@@ -30,5 +30,10 @@ namespace ECommerce.Project.Backend.Infra.Repositories
         {
             return await Query().AnyAsync(s => s.EinNumber == einNumber && !s.Deleted);
         }
+
+        public async Task<List<Supplier>> GetAll() 
+        {
+            return await _dbContext.Suppliers.ToListAsync();
+        }
     }
 }
