@@ -24,9 +24,11 @@ namespace ECommerce.Project.Backend.Domain.Controller
         {
             try
             {
-                await _supplier.Create(_mapper.Map<Supplier>(supplierViewModel));
-
-                return Ok();
+                if (ModelState.IsValid)
+                {
+                    await _supplier.Create(_mapper.Map<Supplier>(supplierViewModel));
+                }
+                return Ok(supplierViewModel);
             }
             catch (Exceptions ex)
             {
@@ -39,8 +41,10 @@ namespace ECommerce.Project.Backend.Domain.Controller
         {
             try
             {
-                await _supplier.Update(_mapper.Map<Supplier>(supplierViewModel));
-
+                if (ModelState.IsValid)
+                {
+                    await _supplier.Update(_mapper.Map<Supplier>(supplierViewModel));
+                }
                 return Ok(supplierViewModel);
             }
             catch (Exception ex)

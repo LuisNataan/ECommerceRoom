@@ -20,12 +20,14 @@ namespace ECommerce.Project.Backend.Web.Controller
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CustomerInsertViewModel customerInsertView)
+        public async Task<IActionResult> Create([FromBody]CustomerInsertViewModel customerInsertView)
         {
             try
             {
-                await _customer.Create(_mapper.Map<Customer>(customerInsertView));
-
+                if (ModelState.IsValid)
+                {
+                    await _customer.Create(_mapper.Map<Customer>(customerInsertView));
+                }
                 return Ok();
             }
             catch (Exceptions ex)
@@ -39,7 +41,10 @@ namespace ECommerce.Project.Backend.Web.Controller
         {
             try
             {
-                await _customer.Update(_mapper.Map<Customer>(customerInsertView));
+                if (ModelState.IsValid)
+                {
+                    await _customer.Update(_mapper.Map<Customer>(customerInsertView));
+                }
 
                 return Ok(customerInsertView);
             }
