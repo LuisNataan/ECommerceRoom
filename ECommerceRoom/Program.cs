@@ -29,6 +29,13 @@ builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", _ => _.WithOrigins("http://localhost:4200")
+    .WithMethods("GET", "POST", "DELETE", "PUT")
+    .AllowAnyHeader()
+    .AllowCredentials());
+});
 
 builder.Services.AddRouting();
 
@@ -46,6 +53,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
