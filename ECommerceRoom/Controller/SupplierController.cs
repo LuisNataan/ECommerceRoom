@@ -3,7 +3,9 @@ using ECommerce.Project.Backend.Application.Commom;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
 using ECommerce.Project.Backend.Domain.Models.Insert;
+using ECommerce.Project.Backend.Web.Utils.Signal_Hub;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ECommerce.Project.Backend.Domain.Controller
 {
@@ -12,11 +14,13 @@ namespace ECommerce.Project.Backend.Domain.Controller
     {
         private readonly ISupplierService _supplier;
         private readonly IMapper _mapper;
+        private readonly IHubContext<SignalHub> _hubContext;
 
-        public SupplierController(ISupplierService supplier, IMapper mapper)
+        public SupplierController(ISupplierService supplier, IMapper mapper, IHubContext<SignalHub> hubContext)
         {
             _supplier = supplier;
             _mapper = mapper;
+            _hubContext = hubContext;
         }
 
         [HttpPost("Create")]
@@ -28,6 +32,8 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 {
                     await _supplier.Create(_mapper.Map<Supplier>(supplierViewModel));
                 }
+                
+                await _hubContext.Clients.All.SendAsync("NotificationMessage", $"Supplier successfully created. {supplierViewModel.CorporateName}");
                 return Ok(supplierViewModel);
             }
             catch (Exceptions ex)
@@ -45,6 +51,8 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 {
                     await _supplier.Update(_mapper.Map<Supplier>(supplierViewModel));
                 }
+
+                await _hubContext.Clients.All.SendAsync("NotificationMessage", $"Supplier updated. {supplierViewModel.CorporateName}");
                 return Ok(supplierViewModel);
             }
             catch (Exception ex)
@@ -74,10 +82,12 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 var customer = await _supplier.GetById(id);
                 if (customer != null)
                 {
+                    await _hubContext.Clients.All.SendAsync("SendNotification");
                     return Ok(customer);
                 }
                 else
                 {
+                    await _hubContext.Clients.All.SendAsync("SendNotification");
                     return NoContent();
                 }
             }
