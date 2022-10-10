@@ -20,7 +20,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(SupplierInsertViewModel supplierViewModel)
+        public async Task<IActionResult> Create([FromBody]SupplierInsertViewModel supplierViewModel)
         {
             try
             {
