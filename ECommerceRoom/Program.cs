@@ -4,6 +4,7 @@ using ECommerce.Project.Backend.Application.Services;
 using ECommerce.Project.Backend.Domain.Interfaces;
 using ECommerce.Project.Backend.Infra.Context;
 using ECommerce.Project.Backend.Infra.Repositories;
+using ECommerce.Project.Backend.Web.Utils.Signal_Hub;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,5 +71,7 @@ app.UseHttpsRedirection();
 app.MapRazorPages();
 
 app.MapControllers();
+
+app.MapHub<SignalHub>("/notifications");
 
 app.Run();
