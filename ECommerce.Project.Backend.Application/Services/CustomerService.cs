@@ -25,8 +25,12 @@ namespace ECommerce.Project.Backend.Application.Services
             await _customerRepository.SaveChanges();
         }
 
-        public async Task Delete(Customer customer)
+        public async Task Delete(int id)
         {
+            var customer = new Customer()
+            {
+                Id = id
+            };
             await _customerRepository.Delete(customer);
             await _customerRepository.SaveChanges();
         }
@@ -44,6 +48,11 @@ namespace ECommerce.Project.Backend.Application.Services
 
         public Task<Customer> GetById(int id)
         {
+            var customer = new Customer() 
+            {
+                Id = id
+            };
+
             return _customerRepository.GetById(id);
         }
 

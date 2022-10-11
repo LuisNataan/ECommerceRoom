@@ -1,4 +1,5 @@
-﻿using ECommerce.Project.Backend.Domain.ComplexTypes;
+﻿
+using ECommerce.Project.Backend.Web.Models.Insert;
 
 namespace ECommerce.Project.Backend.Domain.Models.Insert
 {
@@ -9,6 +10,6 @@ namespace ECommerce.Project.Backend.Domain.Models.Insert
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string EinNumber { get; set; }
-        public Address Address { get; set; }
+        public AddressInsertViewModel AddressViewModel { get; set; }
     }
 }

@@ -21,5 +21,10 @@ namespace ECommerce.Project.Backend.Infra.Repositories
             return await _dbSet.Include(c => c.Address).FirstOrDefaultAsync(c => c.Id == id && !c.Deleted);
 
         }
+
+        public async Task<List<Customer>> GetAll() 
+        {
+            return await _dbContext.Customers.ToListAsync();
+        }
     }
 }

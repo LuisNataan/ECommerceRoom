@@ -13,7 +13,7 @@ namespace ECommerce.Project.Backend.Infra.Repositories
 
         public override async Task<Supplier> GetById(int id) 
         {
-            return await _dbSet.Include(s => s.Adress).FirstOrDefaultAsync(s => s.Id == id && !s.Deleted);
+            return await _dbSet.Include(s => s.Address).FirstOrDefaultAsync(s => s.Id == id && !s.Deleted);
         }
 
         public async Task<Supplier> GetSupplier(string einNumber)
@@ -29,6 +29,11 @@ namespace ECommerce.Project.Backend.Infra.Repositories
         public async Task<bool> SupplierAlreadyExists(string einNumber)
         {
             return await Query().AnyAsync(s => s.EinNumber == einNumber && !s.Deleted);
+        }
+
+        public async Task<List<Supplier>> GetAll() 
+        {
+            return await _dbContext.Suppliers.ToListAsync();
         }
     }
 }

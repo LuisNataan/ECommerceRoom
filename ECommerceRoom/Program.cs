@@ -4,6 +4,7 @@ using ECommerce.Project.Backend.Application.Services;
 using ECommerce.Project.Backend.Domain.Interfaces;
 using ECommerce.Project.Backend.Infra.Context;
 using ECommerce.Project.Backend.Infra.Repositories;
+using ECommerce.Project.Backend.Web.Utils.Signal_Hub;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddRouting();
+builder.Services.AddSignalR();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MainContext>(options => options.UseSqlServer(connectionString));
@@ -55,6 +57,8 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseCors("CorsPolicy");
 
+app.UseCors("CorsPolicy");
+
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
@@ -69,5 +73,7 @@ app.UseHttpsRedirection();
 app.MapRazorPages();
 
 app.MapControllers();
+
+app.MapHub<SignalHub>("/notifications");
 
 app.Run();

@@ -5,7 +5,7 @@ namespace ECommerce.Project.Backend.Domain.Validations
 {
     public class SupplierValidator : AbstractValidator<Supplier>
     {
-        private readonly string _supplierName = "^[0-9a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\\s] +$";
+        private readonly string _stringRule = "^[0-9a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ\\s]+$";
         private readonly string _numberRule = "^[0-9]+$";
 
         public SupplierValidator()
@@ -13,16 +13,16 @@ namespace ECommerce.Project.Backend.Domain.Validations
             RuleFor(s => s.Name)
                 .NotEmpty().WithMessage("Name cannot be empty.")
                 .Length(4, 50).WithMessage("Name must be 4 to 50 characters long.")
-                .Matches(_supplierName).WithMessage("Name has invalid characters.");
+                .Matches(_stringRule).WithMessage("Name has invalid characters.");
 
             RuleFor(s => s.CorporateName)
                 .NotEmpty().WithMessage("Corporate Name cannot be empty.")
                 .Length(4, 50).WithMessage("Corporate Name must be 4 to 50 characters long.")
-                .Matches(_supplierName).WithMessage("Corporate Name has invalid characters");
+                .Matches(_stringRule).WithMessage("Corporate Name has invalid characters");
 
             RuleFor(s => s.PhoneNumber)
                 .NotEmpty().WithMessage("Phone number cannot be empty.")
-                .Length(11, 11).WithMessage("Phone number mus be 11 characters long.")
+                .Length(12, 12).WithMessage("Phone number must be 12 characters long.")
                 .Matches(_numberRule).WithMessage("Phone number has invalid characters.");
             
             RuleFor(s => s.Email)

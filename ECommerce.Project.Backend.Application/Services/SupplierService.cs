@@ -30,8 +30,13 @@ namespace ECommerce.Project.Backend.Application.Services
             await _supplierRepository.SaveChanges();
         }
 
-        public async Task Delete(Supplier supplier)
+        public async Task Delete(int id)
         {
+            var supplier = new Supplier() 
+            {
+                Id = id
+            };
+
             await _supplierRepository.Delete(supplier);
             await _supplierRepository.SaveChanges();
         }
@@ -43,6 +48,11 @@ namespace ECommerce.Project.Backend.Application.Services
 
         public async Task<Supplier> GetById(int id)
         {
+            var supplier = new Supplier()
+            {
+                Id = id
+            };
+
             return await _supplierRepository.GetById(id);
         }
 
@@ -50,6 +60,12 @@ namespace ECommerce.Project.Backend.Application.Services
         {
             try
             {
+                var supplier = new Supplier() 
+                {
+                    EinNumber = einNumber,
+                    Id = id
+                };
+
                 return await _supplierRepository.SameEinNumberSupplier(einNumber, id);
             }
             catch (Exception ex)
@@ -63,6 +79,11 @@ namespace ECommerce.Project.Backend.Application.Services
         {
             try
             {
+                var supplier = new Supplier() 
+                {
+                    EinNumber = einNumber
+                };
+
                 return await _supplierRepository.SupplierAlreadyExists(einNumber);
             }
             catch (Exception ex)

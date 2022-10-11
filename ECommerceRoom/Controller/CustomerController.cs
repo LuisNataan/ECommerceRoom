@@ -3,7 +3,9 @@ using ECommerce.Project.Backend.Application.Commom;
 using ECommerce.Project.Backend.Application.Interfaces;
 using ECommerce.Project.Backend.Domain.Entities;
 using ECommerce.Project.Backend.Web.Models.Insert;
+using ECommerce.Project.Backend.Web.Utils.Signal_Hub;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ECommerce.Project.Backend.Web.Controller
 {
@@ -12,44 +14,45 @@ namespace ECommerce.Project.Backend.Web.Controller
     {
         private readonly ICustomerService _customer;
         private readonly IMapper _mapper;
+        private readonly IHubContext<SignalHub> _hubContext;
 
-        public CustomerController(ICustomerService customer, IMapper mapper)
+        public CustomerController(ICustomerService customer, IMapper mapper, IHubContext<SignalHub> hubContext)
         {
             _customer = customer;
             _mapper = mapper;
+            _hubContext = hubContext;
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CustomerInsertViewModel customerInsertView)
+        public async Task<IActionResult> Create([FromBody] CustomerInsertViewModel customerInsertView)
         {
             try
             {
-                await _customer.Create(_mapper.Map<Customer>(customerInsertView));
-
-                return Ok();
+                if (ModelState.IsValid)
+                {
+                    await _customer.Create(_mapper.Map<Customer>(customerInsertView));
+                }
+                await _hubContext.Clients.All.SendAsync("NotificationMessage", $"Customer successfully created. {customerInsertView.Name}");
+                return Ok(customerInsertView);
             }
             catch (Exceptions ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }
 
-        [HttpPut("{id}/Update")]
-        public async Task<IActionResult> Update(CustomerInsertViewModel customerInsertView)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] CustomerInsertViewModel customerInsertView)
         {
             try
             {
-                var config = new MapperConfiguration(c =>
+                if (ModelState.IsValid)
                 {
-                    c.CreateMap<CustomerInsertViewModel, Customer>();
-                });
-                IMapper mapper = config.CreateMapper();
-                Customer customer = mapper.Map<Customer>(customerInsertView);
+                    await _customer.Update(_mapper.Map<Customer>(customerInsertView));
+                }
 
-                await _customer.Update(customer);
-
-                return Ok(customer);
+                await _hubContext.Clients.All.SendAsync("NotificationMessage", $"Customer updated. {customerInsertView.Name}");
+                return Ok(customerInsertView);
             }
             catch (Exception ex)
             {
@@ -66,10 +69,12 @@ namespace ECommerce.Project.Backend.Web.Controller
                 var customer = await _customer.GetById(id);
                 if (customer != null)
                 {
+                    await _hubContext.Clients.All.SendAsync("SendNotification");
                     return Ok(customer);
                 }
                 else
                 {
+                    await _hubContext.Clients.All.SendAsync("SendNotification");
                     return NoContent();
                 }
             }
@@ -81,16 +86,30 @@ namespace ECommerce.Project.Backend.Web.Controller
         }
 
         [HttpGet("Customers")]
-        public async Task<IActionResult> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
             try
             {
-                await _customer.GetAll();
-                return Ok();
+                return await _customer.GetAll();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return null;
+            }
+        }
+
+        [HttpDelete("{id}/Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _customer.Delete(id);
+                return NoContent();
+            }
+            catch (Exceptions ex)
+            {
+
+                return BadRequest(ex);
             }
         }
     }
