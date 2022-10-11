@@ -24,7 +24,7 @@ namespace ECommerce.Project.Backend.Web.Controller
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody]CustomerInsertViewModel customerInsertView)
+        public async Task<IActionResult> Create([FromBody] CustomerInsertViewModel customerInsertView)
         {
             try
             {

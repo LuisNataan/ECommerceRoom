@@ -39,6 +39,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddRouting();
+builder.Services.AddSignalR();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MainContext>(options => options.UseSqlServer(connectionString));

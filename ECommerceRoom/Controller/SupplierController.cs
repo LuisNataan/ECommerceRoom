@@ -24,7 +24,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody]SupplierInsertViewModel supplierViewModel)
+        public async Task<IActionResult> Create([FromBody] SupplierInsertViewModel supplierViewModel)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace ECommerce.Project.Backend.Domain.Controller
                 {
                     await _supplier.Create(_mapper.Map<Supplier>(supplierViewModel));
                 }
-                
+
                 await _hubContext.Clients.All.SendAsync("NotificationMessage", $"Supplier successfully created. {supplierViewModel.CorporateName}");
                 return Ok(supplierViewModel);
             }
